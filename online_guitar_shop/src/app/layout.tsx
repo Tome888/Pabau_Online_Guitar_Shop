@@ -4,6 +4,7 @@ import "./globals.css";
 import { GraphQLProvider } from "./providers/graphql-provider";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import { BrandProvider } from "./providers/BrandContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,11 +32,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <GraphQLProvider>
-          <>
-            <NavBar />
-            {children}
-            <Footer />
-          </>
+          <BrandProvider>
+            <>
+              <NavBar />
+              {children}
+              <Footer />
+            </>
+          </BrandProvider>
         </GraphQLProvider>
       </body>
     </html>
