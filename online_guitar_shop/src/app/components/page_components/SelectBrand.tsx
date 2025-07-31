@@ -60,7 +60,7 @@ export default function SelectBrand() {
                 src={brand.image}
                 alt={brand.name}
                 fill
-                className="object-contain h-auto w-[150px] filter grayscale"
+                className="object-contain h-auto w-[150px] filter grayscale opacity-55"
                 sizes="(max-width: 768px) 100vw, 150px"
                 priority={true}
               />
