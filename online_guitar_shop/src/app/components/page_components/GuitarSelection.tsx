@@ -1,0 +1,103 @@
+"use client";
+
+import { gql, useQuery } from "@apollo/client";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import GuitarCard from "../cards/GuitarCard";
+import FilterInput from "../micro_elements/FilterInput";
+import PaginationInfo from "../micro_elements/PaginationInfo";
+import PaginationControls from "../micro_elements/PaginationControls";
+
+const SEARCH_MODELS = gql`
+  query SearchModels($brandId: String!, $name: String!) {
+    searchModels(brandId: $brandId, name: $name) {
+      id
+      name
+      type
+      image
+      description
+      price
+    }
+  }
+`;
+
+type GuitarModel = {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  price: number;
+  type: string;
+  __typename: string;
+};
+
+export default function ModelsList() {
+  const params = useParams();
+  const brandId = params.brandId as string;
+
+  const { data, loading, error } = useQuery(SEARCH_MODELS, {
+    variables: {
+      brandId,
+      name: "",
+    },
+    skip: !brandId,
+  });
+
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 6;
+
+  useEffect(() => {
+    if (!data) return;
+    console.log(data);
+  }, [data]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  const start = (page - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+
+  const pagedModels = data?.searchModels?.slice(start, end) || [];
+
+  return (
+    <section className="bg-gray-500 p-4">
+      <h2 className="text-xl font-semibold mb-4">
+        Check out the <span>Selection</span>
+      </h2>
+
+      <FilterInput />
+
+      {pagedModels.length === 0 ? (
+        <p>No models found.</p>
+      ) : (
+        <div className="flex flex-wrap justify-start items-start p-3 w-full gap-4">
+          {pagedModels.map((model: GuitarModel) => (
+            <GuitarCard
+              key={model.id}
+              modelId={model.id}
+              modelImg={model.image}
+              modelName={model.name}
+              modelPrice={model.price}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Info about range */}
+      <PaginationInfo
+        total={data?.searchModels.length || 0}
+        start={start}
+        count={pagedModels.length}
+      />
+
+      {/* Pagination controls */}
+      <PaginationControls
+        currentPage={page}
+        totalItems={data?.searchModels?.length || 0}
+        itemsPerPage={itemsPerPage}
+        onPageChange={setPage}
+      />
+    </section>
+  );
+}
