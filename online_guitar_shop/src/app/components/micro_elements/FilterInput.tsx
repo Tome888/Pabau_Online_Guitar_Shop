@@ -30,13 +30,22 @@ export default function FilterInput({
 
       {arrTypes[0] && openFilter && (
         <div className=" flex flex-col w=[100px] border border-amber-950">
-          <div className="text-3xl text-gray-950" onClick={() => setFiled("")}>
+          <div
+            className="text-3xl text-gray-950"
+            onClick={() => {
+              setFiled("");
+              setOpenFilter(!openFilter);
+            }}
+          >
             None
           </div>
           {arrTypes.map((gType, idx) => {
             return (
               <div
-                onClick={() => setFiled(gType)}
+                onClick={() => {
+                  setFiled(gType);
+                  setOpenFilter(!openFilter);
+                }}
                 key={idx}
                 className="text-3xl text-gray-950"
               >

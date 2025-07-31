@@ -8,6 +8,7 @@
 // import FilterInput from "../micro_elements/FilterInput";
 // import PaginationInfo from "../micro_elements/PaginationInfo";
 // import PaginationControls from "../micro_elements/PaginationControls";
+// import SearchInput from "../micro_elements/SearchInput";
 
 // const SEARCH_MODELS = gql`
 //   query SearchModels($brandId: String!, $name: String!) {
@@ -37,7 +38,7 @@
 //   const brandId = params.brandId as string;
 //   const [filterInput, setFilerInput] = useState("");
 //   const [searchInput, setSearchInput] = useState("");
-//   const [arrTypes, setArrTypes] = useState<string[] | []>([]);
+//   const [arrTypes, setArrTypes] = useState<string[]>([]);
 
 //   const { data, loading, error } = useQuery(SEARCH_MODELS, {
 //     variables: {
@@ -53,9 +54,12 @@
 //   useEffect(() => {
 //     if (!data) return;
 //     console.log(data);
+
 //     const uniqueTypes = [
 //       ...new Set(
-//         data.searchModels.map((model: any) => model.type).filter(Boolean)
+//         data.searchModels
+//           .map((model: GuitarModel) => model.type)
+//           .filter(Boolean)
 //       ),
 //     ];
 
@@ -65,10 +69,18 @@
 //   if (loading) return <p>Loading...</p>;
 //   if (error) return <p>Error: {error.message}</p>;
 
+//   // Filter models based on filterInput (type)
+//   const filteredModels =
+//     filterInput === ""
+//       ? data?.searchModels
+//       : data?.searchModels?.filter(
+//           (model: GuitarModel) => model.type === filterInput
+//         );
+
 //   const start = (page - 1) * itemsPerPage;
 //   const end = start + itemsPerPage;
 
-//   const pagedModels = data?.searchModels?.slice(start, end) || [];
+//   const pagedModels = filteredModels?.slice(start, end) || [];
 
 //   return (
 //     <section className="bg-gray-500 p-4">
@@ -76,12 +88,16 @@
 //         Check out the <span>Selection</span>
 //       </h2>
 
-//       {/* Filter input for filtering models by name passing req props */}
-//       <FilterInput
-//         field={filterInput}
-//         setFiled={setFilerInput}
-//         arrTypes={arrTypes}
-//       />
+//       {/* Only show filter if arrTypes is populated */}
+//       {arrTypes.length > 0 && (
+//         <FilterInput
+//           field={filterInput}
+//           setFiled={setFilerInput}
+//           arrTypes={arrTypes}
+//         />
+//       )}
+
+//       <SearchInput searchFilter={searchInput} setSearch={setSearchInput} />
 
 //       {pagedModels.length === 0 ? (
 //         <p>No models found.</p>
@@ -99,17 +115,15 @@
 //         </div>
 //       )}
 
-//       {/* Info about range */}
 //       <PaginationInfo
-//         total={data?.searchModels.length || 0}
+//         total={filteredModels.length}
 //         start={start}
 //         count={pagedModels.length}
 //       />
 
-//       {/* Pagination controls */}
 //       <PaginationControls
 //         currentPage={page}
-//         totalItems={data?.searchModels?.length || 0}
+//         totalItems={filteredModels.length}
 //         itemsPerPage={itemsPerPage}
 //         onPageChange={setPage}
 //       />
@@ -127,6 +141,7 @@ import GuitarCard from "../cards/GuitarCard";
 import FilterInput from "../micro_elements/FilterInput";
 import PaginationInfo from "../micro_elements/PaginationInfo";
 import PaginationControls from "../micro_elements/PaginationControls";
+import SearchInput from "../micro_elements/SearchInput";
 
 const SEARCH_MODELS = gql`
   query SearchModels($brandId: String!, $name: String!) {
@@ -172,6 +187,8 @@ export default function ModelsList() {
   useEffect(() => {
     if (!data) return;
 
+    console.log(data);
+
     const uniqueTypes = [
       ...new Set(
         data.searchModels
@@ -186,18 +203,20 @@ export default function ModelsList() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  // Filter models based on filterInput (type)
+  // Combine type and search filtering
   const filteredModels =
-    filterInput === ""
-      ? data?.searchModels
-      : data?.searchModels?.filter(
-          (model: GuitarModel) => model.type === filterInput
-        );
+    data?.searchModels?.filter((model: GuitarModel) => {
+      const matchesType = filterInput === "" || model.type === filterInput;
+      const matchesSearch =
+        searchInput === "" ||
+        model.name.toLocaleLowerCase().includes(searchInput);
+
+      return matchesType && matchesSearch;
+    }) || [];
 
   const start = (page - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-
-  const pagedModels = filteredModels?.slice(start, end) || [];
+  const pagedModels = filteredModels.slice(start, end);
 
   return (
     <section className="bg-gray-500 p-4">
@@ -205,7 +224,7 @@ export default function ModelsList() {
         Check out the <span>Selection</span>
       </h2>
 
-      {/* Only show filter if arrTypes is populated */}
+      {/* Filter input for types (only if types exist) */}
       {arrTypes.length > 0 && (
         <FilterInput
           field={filterInput}
@@ -213,6 +232,9 @@ export default function ModelsList() {
           arrTypes={arrTypes}
         />
       )}
+
+      {/* Search input for name */}
+      <SearchInput searchFilter={searchInput} setSearch={setSearchInput} />
 
       {pagedModels.length === 0 ? (
         <p>No models found.</p>
