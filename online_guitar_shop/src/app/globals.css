@@ -74,6 +74,15 @@ nav {
   background-size: cover;
 }
 
+.logoGradiant {
+  width: 800px;
+  height: 700px;
+
+  border-bottom-left-radius: 70%;
+  border-bottom-right-radius: 30%;
+  background: linear-gradient(180deg, #ff8c60 0%, #ff5b1c 100%);
+}
+
 section {
   padding-right: 10rem;
   padding-left: 10rem;

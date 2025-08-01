@@ -16,7 +16,7 @@ export default function SelectBrand() {
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <section className="w-full flex flex-col justify-center items-center gap-1 pt-25  pb-25">
+    <section className="w-full flex flex-col justify-center items-center gap-1 pt-25 pb-25">
       <h2 className="text-[44px] font-bold text-zinc-950 text-center">
         {t.brandSecTitle}
       </h2>

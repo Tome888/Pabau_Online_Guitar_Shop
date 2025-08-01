@@ -1,6 +1,8 @@
 "use client";
 
+import { useLanguage } from "@/app/providers/LanguageContext";
 import React from "react";
+import shop from "../../../../translations/shop";
 
 type Props = {
   total: number;
@@ -9,14 +11,12 @@ type Props = {
 };
 
 export default function PaginationInfo({ total, start, count }: Props) {
+  const { language } = useLanguage();
+  const t = shop[language];
   return (
-    // <p className="text-center text-sm text-gray-300 my-2">
-    //   Showing {count === 0 ? 0 : start + 1}–{start + count} of {total} models
-    // </p>
-
-    <p className="text-center text-sm text-gray-300 my-2">
-      Showing <b>{start + count} </b>
-      Results from <b>{total}</b>
+    <p className="text-center text-sm text-[#9292A3] my-2">
+      {t.showing} <b>{start + count} </b>
+      {t.results} <b>{total}</b>
     </p>
   );
 }

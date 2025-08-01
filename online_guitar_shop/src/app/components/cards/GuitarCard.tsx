@@ -21,7 +21,7 @@ export default function GuitarCard({
   return (
     <div
       onClick={() => router.push(`/${brandId}/${modelId}`)}
-      className="bg-amber-500 w-[30%] flex flex-col justify-start items-start cursor-pointer transform transition-transform duration-300 hover:scale-105"
+      className=" w-[30%] flex flex-col justify-start items-start cursor-pointer transform transition-transform duration-300 hover:scale-105"
     >
       <ModelImage src={modelImg} alt={modelName} />
       <h3 className="font-bold text-3xl">{modelName}</h3>

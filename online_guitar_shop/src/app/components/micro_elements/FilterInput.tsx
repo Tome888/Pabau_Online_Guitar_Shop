@@ -1,6 +1,9 @@
 "use client";
 
+import { useLanguage } from "@/app/providers/LanguageContext";
 import { useState } from "react";
+import shop from "../../../../translations/shop";
+import { ChevronDown, ChevronUp, FunnelPlus } from "lucide-react";
 
 interface FilterInputProps {
   field: string;
@@ -14,6 +17,8 @@ export default function FilterInput({
   arrTypes,
 }: FilterInputProps) {
   const [openFilter, setOpenFilter] = useState(false);
+  const { language } = useLanguage();
+  const t = shop[language];
 
   const handleFilterSelect = (gType: string) => {
     setFiled(gType);
@@ -25,33 +30,37 @@ export default function FilterInput({
     setOpenFilter(false);
   };
 
+  const isActive = field !== "";
+
   return (
-    <>
+    <div className="relative w-fit">
       <div
-        className="flex justify-evenly items-center w-[200px] border border-amber-50 cursor-pointer"
+        className={`flex gap-2 justify-evenly items-center w-[350px] border cursor-pointer p-2 transition-colors duration-200
+          ${isActive ? "border-orange-200 text-[#FF8C60]" : "border-gray-200"}
+          hover:border-orange-500 hover:text-[#FF8C60]`}
         onClick={() => setOpenFilter(!openFilter)}
       >
-        <p>⚙️</p>
-
-        <p>Filter by type: {field}</p>
-
-        <p>{openFilter ? "▼" : "▲"}</p>
+        <FunnelPlus />
+        <p>
+          {t.filter}: {field || t.none}
+        </p>
+        {openFilter ? <ChevronUp /> : <ChevronDown />}
       </div>
 
       {arrTypes[0] && openFilter && (
-        <div className="flex flex-col w-[100px] border border-amber-950 bg-white">
+        <div className="absolute top-full left-0 z-50 flex flex-col w-full border hover:text-[#FF8C60] bg-white shadow-md mt-1 rounded-2xl border-gray-200">
           <div
-            className="text-3xl text-gray-950 cursor-pointer hover:bg-gray-100 p-2"
+            className="text-3xl text-gray-950 cursor-pointer hover:bg-orange-100 hover:text-[#FF8C60] p-2 transition-colors duration-150"
             onClick={handleClearFilter}
           >
-            None
+            {t.none}
           </div>
           {arrTypes.map((gType, idx) => {
             return (
               <div
                 onClick={() => handleFilterSelect(gType)}
                 key={idx}
-                className="text-3xl text-gray-950 cursor-pointer hover:bg-gray-100 p-2"
+                className="text-3xl rounded-2xl text-gray-950 cursor-pointer hover:bg-orange-100 hover:text-[#FF8C60] p-2 transition-colors duration-150"
               >
                 {gType}
               </div>
@@ -59,6 +68,6 @@ export default function FilterInput({
           })}
         </div>
       )}
-    </>
+    </div>
   );
 }

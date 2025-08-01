@@ -1,5 +1,7 @@
 "use client";
 
+import { useLanguage } from "@/app/providers/LanguageContext";
+import { Search } from "lucide-react";
 import { useState, useEffect } from "react";
 
 interface SearchInputProps {
@@ -11,6 +13,7 @@ export default function SearchInput({
   searchFilter,
   setSearch,
 }: SearchInputProps) {
+  const { language } = useLanguage();
   // Local state to handle input value for better UX
   const [_, setInputValue] = useState(searchFilter);
 
@@ -34,51 +37,21 @@ export default function SearchInput({
   };
 
   return (
-    <div className="w-[250px] flex justify-evenly items-center border border-gray-400">
-      <p>🔎</p>
+    <div className="flex gap-2 justify-between items-center w-[350px] border cursor-pointer p-2 transition-colors duration-200 border-gray-200">
+      <Search />
 
       <input
+        className="w-[90%]"
         onChange={handleInputChange}
         type="text"
-        placeholder="Search by Name"
-        // value={inputValue}
+        placeholder={
+          language === "mk"
+            ? "Пребарај по име"
+            : language === "al"
+            ? "Kërko sipas emrit"
+            : "Search by Name"
+        }
       />
     </div>
   );
 }
-
-// "use client";
-
-// import { useEffect, useState } from "react";
-
-// interface SearchInputProps {
-//   // searchFilter: string;
-//   setSearch: (str: string) => void;
-// }
-
-// export default function SearchInput({
-//   // searchFilter,
-//   setSearch,
-// }: SearchInputProps) {
-//   const [inputValue, setInputValue] = useState("");
-
-//   // Update search with debounce
-//   useEffect(() => {
-//     const timeout = setTimeout(() => {
-//       setSearch(inputValue.trim().toLowerCase());
-//     }, 300);
-
-//     return () => clearTimeout(timeout);
-//   }, [inputValue, setSearch]);
-
-//   return (
-//     <div className="w-[250px] flex justify-evenly items-center border border-gray-400">
-//       <p>🔎</p>
-//       <input
-//         onChange={(e) => setInputValue(e.target.value)}
-//         type="text"
-//         placeholder="Search by Name"
-//       />
-//     </div>
-//   );
-// }
