@@ -1,7 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type Language = "mk" | "en" | "al";
 
@@ -19,22 +18,22 @@ export const LanguageProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const pathname = usePathname();
-  const router = useRouter();
+  const [language, setLanguageState] = useState<Language>("en");
 
-  const currentLang = useMemo(() => {
-    const lang = pathname?.split("/")[1];
-    return lang === "mk" || lang === "al" || lang === "en" ? lang : "en";
-  }, [pathname]);
+  useEffect(() => {
+    const savedLang = localStorage.getItem("lang") as Language | null;
+    if (savedLang === "mk" || savedLang === "al" || savedLang === "en") {
+      setLanguageState(savedLang);
+    }
+  }, []);
 
   const setLanguage = (lang: Language) => {
-    const segments = pathname.split("/");
-    segments[1] = lang;
-    router.push(segments.join("/") || "/");
+    localStorage.setItem("lang", lang);
+    setLanguageState(lang);
   };
 
   return (
-    <LanguageContext.Provider value={{ language: currentLang, setLanguage }}>
+    <LanguageContext.Provider value={{ language, setLanguage }}>
       {children}
     </LanguageContext.Provider>
   );
@@ -42,7 +41,8 @@ export const LanguageProvider = ({
 
 export const useLanguage = (): LanguageContextType => {
   const context = useContext(LanguageContext);
-  if (!context)
+  if (!context) {
     throw new Error("useLanguage must be used within a LanguageProvider");
+  }
   return context;
 };
