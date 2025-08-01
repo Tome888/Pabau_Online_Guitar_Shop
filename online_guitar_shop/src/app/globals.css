@@ -50,3 +50,70 @@ nav {
   padding-right: 90px;
   padding-top: 30px;
 }
+
+.frostedGlass {
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, 0.507);
+}
+
+.heroImage {
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 20%;
+}
+
+.testImage {
+  width: 900px;
+  height: 800px;
+  background-image: url("/heroImage.jpg");
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  background-position: center bottom 20%;
+  border-bottom-left-radius: 70%;
+  border-bottom-right-radius: 30%;
+  background-size: cover;
+}
+
+section {
+  padding-right: 10rem;
+  padding-left: 10rem;
+}
+.hero {
+  padding: 0 !important;
+}
+.spinner {
+  width: 80px;
+  height: 80px;
+  background-color: #ff6428;
+
+  margin: 100px auto;
+  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+  animation: sk-rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-rotateplane {
+  0% {
+    -webkit-transform: perspective(120px);
+  }
+  50% {
+    -webkit-transform: perspective(120px) rotateY(180deg);
+  }
+  100% {
+    -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg);
+  }
+}
+
+@keyframes sk-rotateplane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
