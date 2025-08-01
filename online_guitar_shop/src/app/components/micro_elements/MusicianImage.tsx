@@ -2,23 +2,25 @@
 
 // import { useState } from "react";
 
-// interface ModelImageProps {
+// interface MusicianImageProps {
 //   src: string | null;
 //   alt: string;
 //   customClass?: string;
 // }
 
-// const FALLBACK_IMAGE =
-//   "https://www.fmicassets.com/Damroot/Zoom/10001/9235000560_gtr_frt_001_rr.png";
-
-// export default function ModelImage({ src, alt, customClass }: ModelImageProps) {
+// const FALLBACK_IMAGE = "/defaultImg.png";
+// export default function MusicianImage({
+//   src,
+//   alt,
+//   customClass,
+// }: MusicianImageProps) {
 //   const [imgSrc, setImgSrc] = useState(src || FALLBACK_IMAGE);
 
 //   return (
 //     <img
 //       src={imgSrc}
 //       alt={alt}
-//       className={`mb-2 object-contain w-full max-w-[100%] h-[150px ${customClass}`}
+//       className={`mb-2 object-contain w-full max-w-[90%] h-[90%] ${customClass}`}
 //       onError={() => {
 //         if (imgSrc !== FALLBACK_IMAGE) setImgSrc(FALLBACK_IMAGE);
 //       }}
@@ -30,18 +32,22 @@
 
 import { useState, useEffect } from "react";
 
-interface ModelImageProps {
+interface MusicianImageProps {
   src: string | null;
   alt: string;
   customClass?: string;
 }
 
-const FALLBACK_IMAGE =
-  "https://www.fmicassets.com/Damroot/Zoom/10001/9235000560_gtr_frt_001_rr.png";
+const FALLBACK_IMAGE = "/defaultImg.png";
 
-export default function ModelImage({ src, alt, customClass }: ModelImageProps) {
+export default function MusicianImage({
+  src,
+  alt,
+  customClass,
+}: MusicianImageProps) {
   const [imgSrc, setImgSrc] = useState(src || FALLBACK_IMAGE);
 
+  // 🔄 Update state when `src` prop changes
   useEffect(() => {
     setImgSrc(src || FALLBACK_IMAGE);
   }, [src]);
@@ -50,7 +56,7 @@ export default function ModelImage({ src, alt, customClass }: ModelImageProps) {
     <img
       src={imgSrc}
       alt={alt}
-      className={`mb-2 object-contain w-full max-w-[100%] h-[150px] ${customClass}`}
+      className={`w-[90%] h-[90%] ${customClass}`}
       onError={() => {
         if (imgSrc !== FALLBACK_IMAGE) setImgSrc(FALLBACK_IMAGE);
       }}

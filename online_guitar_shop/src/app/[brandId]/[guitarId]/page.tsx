@@ -77,7 +77,7 @@ export default function GuitarPage() {
     <main className="p-4">
       <h2 className="text-2xl font-bold mb-4">{model.name}</h2>
       <img src={model.image} alt={model.name} className="w-64 rounded mb-4" />
-      <p className="mb-4">{model.description}</p>
+      {/* <p className="mb-4">{model.description}</p>
       <p className="font-semibold text-lg">Price: ${model.price}</p>
 
       <h3 className="mt-6 text-xl font-bold">Specifications</h3>
@@ -102,9 +102,13 @@ export default function GuitarPage() {
             ))}
           </ul>
         </>
-      )}
+      )} */}
 
-      {/* <TabSection model={model} /> */}
+      {data.findUniqueModel ? (
+        <TabSection modelData={data.findUniqueModel} />
+      ) : (
+        <p className="text-zinc-950">Loading...</p>
+      )}
     </main>
   );
 }

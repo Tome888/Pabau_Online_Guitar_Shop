@@ -5,6 +5,7 @@ import { GraphQLProvider } from "./providers/graphql-provider";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { BrandProvider } from "./providers/BrandContext";
+import { LanguageProvider } from "./providers/LanguageContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,11 +34,13 @@ export default function RootLayout({
       >
         <GraphQLProvider>
           <BrandProvider>
-            <>
-              <NavBar />
-              {children}
-              <Footer />
-            </>
+            <LanguageProvider>
+              <>
+                <NavBar />
+                {children}
+                <Footer />
+              </>
+            </LanguageProvider>
           </BrandProvider>
         </GraphQLProvider>
       </body>

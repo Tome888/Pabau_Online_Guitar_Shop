@@ -1,30 +1,3 @@
-// "use client";
-
-// interface SearchInputProps {
-//   searchFilter: string;
-//   setSearch: (str: string) => void;
-// }
-
-// export default function SearchInput({
-//   searchFilter,
-//   setSearch,
-// }: SearchInputProps) {
-//   return (
-//     <div className="w-[250px] flex justify-evenly items-center border border-gray-400">
-//       <p>🔎</p>
-
-//       <input
-//         onChange={(e) => {
-//           setSearch(e.target.value.trim().toLocaleLowerCase());
-//         }}
-//         type="text"
-//         placeholder="Search by Name"
-//         value={searchFilter}
-//       />
-//     </div>
-//   );
-// }
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -39,7 +12,7 @@ export default function SearchInput({
   setSearch,
 }: SearchInputProps) {
   // Local state to handle input value for better UX
-  const [inputValue, setInputValue] = useState(searchFilter);
+  const [_, setInputValue] = useState(searchFilter);
 
   // Update local state when searchFilter prop changes (from URL)
   useEffect(() => {
@@ -68,8 +41,44 @@ export default function SearchInput({
         onChange={handleInputChange}
         type="text"
         placeholder="Search by Name"
-        value={inputValue}
+        // value={inputValue}
       />
     </div>
   );
 }
+
+// "use client";
+
+// import { useEffect, useState } from "react";
+
+// interface SearchInputProps {
+//   // searchFilter: string;
+//   setSearch: (str: string) => void;
+// }
+
+// export default function SearchInput({
+//   // searchFilter,
+//   setSearch,
+// }: SearchInputProps) {
+//   const [inputValue, setInputValue] = useState("");
+
+//   // Update search with debounce
+//   useEffect(() => {
+//     const timeout = setTimeout(() => {
+//       setSearch(inputValue.trim().toLowerCase());
+//     }, 300);
+
+//     return () => clearTimeout(timeout);
+//   }, [inputValue, setSearch]);
+
+//   return (
+//     <div className="w-[250px] flex justify-evenly items-center border border-gray-400">
+//       <p>🔎</p>
+//       <input
+//         onChange={(e) => setInputValue(e.target.value)}
+//         type="text"
+//         placeholder="Search by Name"
+//       />
+//     </div>
+//   );
+// }
