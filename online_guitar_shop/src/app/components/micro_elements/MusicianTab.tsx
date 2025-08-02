@@ -21,7 +21,7 @@ export default function MusicianTab({ musiciansArr }: MusicianTabProps) {
   );
 
   return (
-    <div className="w-full flex flex-col items-center justify-start bg-gray-950">
+    <div className="w-full flex flex-col items-center justify-start ">
       {/* Musicians display */}
       <div className="w-full flex items-center justify-center flex-wrap gap-6 py-6">
         {visibleMusicians.map((mus, idx) => (
@@ -33,14 +33,13 @@ export default function MusicianTab({ musiciansArr }: MusicianTabProps) {
         ))}
       </div>
 
-      {/* Pagination circles */}
-      <div className="flex gap-3 pb-6">
+      <div className="flex items-end gap-3 pb-6 h-10">
         {Array.from({ length: totalPages }).map((_, idx) => (
           <button
             key={idx}
             onClick={() => setCurrentPage(idx)}
-            className={`w-3 h-3 rounded-full ${
-              currentPage === idx ? "bg-white" : "bg-gray-600"
+            className={`transition-all duration-300 cursor-pointer ease-in-out rounded-full bg-[#D9D9D9] ${
+              currentPage === idx ? "w-6 h-6" : "w-3 h-3"
             }`}
           ></button>
         ))}

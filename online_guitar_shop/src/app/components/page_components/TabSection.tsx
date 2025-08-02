@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import SpecsTab from "../micro_elements/SpecsTab";
 import MusicianTab from "../micro_elements/MusicianTab";
+import { useLanguage } from "@/app/providers/LanguageContext";
+import specs from "../../../../translations/specs";
 export interface Specs {
   __typename: string;
   bodyWood: string;
@@ -37,25 +39,31 @@ interface ModelProps {
 
 export default function TabSection({ modelData }: ModelProps) {
   const [toggleTab, setToggleTab] = useState(true);
+  const { language } = useLanguage();
+  const t = specs[language];
 
   useEffect(() => {
     console.log(modelData, "HELLO FROM TAB SECTION");
   }, [modelData]);
 
   return (
-    <div className="w-[100%] bg-gray-400">
+    <div className="w-[100%]">
       <div className="flex items-center justify-center">
         <button
           onClick={() => setToggleTab(true)}
-          className={`w-[50%] ${toggleTab && "border border-b-amber-500"}`}
+          className={`w-[50%] pb-2 pt-30 text-[24px] ${
+            toggleTab && "border-b-7 border-b-amber-500 text-amber-500"
+          }`}
         >
-          Specifications
+          {t.specs}
         </button>
         <button
           onClick={() => setToggleTab(false)}
-          className={`w-[50%] ${!toggleTab && "border border-b-amber-500"}`}
+          className={`w-[50%] pb-2 pt-30 text-[24px] ${
+            !toggleTab && "border-b-7 border-b-amber-500 text-amber-500"
+          }`}
         >
-          Who plays it?
+          {t.whoPlays}
         </button>
       </div>
       {toggleTab && (

@@ -11,6 +11,9 @@ import PaginationControls from "../micro_elements/PaginationControls";
 import SearchInput from "../micro_elements/SearchInput";
 import { useLanguage } from "@/app/providers/LanguageContext";
 import shop from "../../../../translations/shop";
+import Loading from "../suspense/Loading";
+import ErrComponent from "../suspense/ErrComponent";
+import ItemNotFound from "../suspense/ItemNotFound";
 
 const SEARCH_MODELS = gql`
   query SearchModels($brandId: String!, $name: String!) {
@@ -170,9 +173,8 @@ export default function GuitarSelection() {
     return () => container.removeEventListener("wheel", onWheel);
   }, [filteredModels.length, itemsPerPage, page, handlePageChange]);
 
-  // EARLY RETURNS AFTER ALL HOOKS
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading) return <Loading msg={"Loading..."} />;
+  if (error) return <ErrComponent errMsg={error.message} />;
 
   // DERIVED VALUES
   const start = (page - 1) * itemsPerPage;
@@ -186,13 +188,11 @@ export default function GuitarSelection() {
       </h2>
 
       <div className="flex justify-end items-end w-full gap-4">
-        {arrTypes.length > 0 && (
-          <FilterInput
-            field={filterInput}
-            setFiled={handleFilterChange}
-            arrTypes={arrTypes}
-          />
-        )}
+        <FilterInput
+          field={filterInput}
+          setFiled={handleFilterChange}
+          arrTypes={arrTypes}
+        />
 
         <SearchInput
           searchFilter={searchInput}
@@ -200,24 +200,7 @@ export default function GuitarSelection() {
         />
       </div>
       {pagedModels.length === 0 ? (
-        <div className="flex flex-col justify-center items-center w-full p-8 text-gray-500 border border-dashed border-gray-300 rounded-md max-h-[700px] min-h-[500px]">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-16 h-16 text-gray-400 mb-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9.75 9.75h.008v.008H9.75V9.75zm4.5 0h.008v.008H14.25V9.75zM21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 15c.352.452 1.173.75 2.25.75s1.898-.298 2.25-.75"
-            />
-          </svg>
-          <p className="text-lg font-medium">{t.notFound}</p>
-          <p className="text-sm text-gray-400">{t.adjust}</p>
-        </div>
+        <ItemNotFound msgOne={t.notFound} msgTwo={t.adjust} />
       ) : (
         <div
           ref={scrollContainerRef}

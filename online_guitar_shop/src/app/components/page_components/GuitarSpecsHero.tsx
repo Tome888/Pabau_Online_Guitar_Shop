@@ -1,9 +1,5 @@
 "use client";
 
-// import { useLanguage } from "@/app/providers/LanguageContext";
-// import shop from "../../../../translations/shop";
-// import { useParams } from "next/navigation";
-// import { useBrandContext } from "@/app/providers/BrandContext";
 import ModelImage from "../micro_elements/ModelImage";
 
 interface HeroProps {
