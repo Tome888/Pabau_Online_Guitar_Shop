@@ -204,7 +204,7 @@ export default function GuitarSelection() {
       ) : (
         <div
           ref={scrollContainerRef}
-          className="flex flex-wrap justify-center items-start p-3 w-full gap-6 overflow-y-auto max-h-[700px] min-h-[500px] mt-10"
+          className="flex flex-wrap justify-start pl-20 items-start p-3 w-full gap-6 overflow-y-auto max-h-[700px] min-h-[500px] mt-10"
         >
           {pagedModels.map((model: GuitarModel) => (
             <GuitarCard

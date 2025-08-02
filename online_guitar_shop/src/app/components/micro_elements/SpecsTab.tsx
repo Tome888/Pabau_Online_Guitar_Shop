@@ -7,7 +7,7 @@ interface SpecsData {
 
 export default function SpecsTab({ dataSpecs, descModel }: SpecsData) {
   return (
-    <div className="w-[100%] gap-4 flex flex-col items-start justify-start pt-10 pb-10 pl-24 pr-24">
+    <div className="w-[100%] gap-4 flex flex-col items-start justify-start pt-10 pb-40 pl-24 pr-24">
       <p className="text-bigger">{descModel}</p>
 
       <div className="text-bigger">

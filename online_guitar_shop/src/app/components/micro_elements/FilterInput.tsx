@@ -48,9 +48,9 @@ export default function FilterInput({
       </div>
 
       {arrTypes[0] && openFilter && (
-        <div className="absolute top-full left-0 z-50 flex flex-col w-full border hover:text-[#FF8C60] bg-white shadow-md mt-1 rounded-2xl border-gray-200">
+        <div className="absolute top-full left-0 z-50 flex flex-col w-full border hover:text-[#FF8C60] bg-white shadow-md mt-1 rounded-lg border-gray-200">
           <div
-            className="text-3xl text-gray-950 cursor-pointer hover:bg-orange-100 hover:text-[#FF8C60] p-2 transition-colors duration-150"
+            className="text-xl text-gray-950 cursor-pointer hover:bg-orange-100 hover:text-[#FF8C60] p-2 transition-colors duration-150"
             onClick={handleClearFilter}
           >
             {t.none}
@@ -60,7 +60,7 @@ export default function FilterInput({
               <div
                 onClick={() => handleFilterSelect(gType)}
                 key={idx}
-                className="text-3xl rounded-2xl text-gray-950 cursor-pointer hover:bg-orange-100 hover:text-[#FF8C60] p-2 transition-colors duration-150"
+                className="text-xl rounded-lg text-gray-950 cursor-pointer hover:bg-orange-100 hover:text-[#FF8C60] p-2 transition-colors duration-150"
               >
                 {gType}
               </div>

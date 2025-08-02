@@ -7,7 +7,7 @@ import TabSection from "@/app/components/page_components/TabSection";
 import GuitarSpecsHero from "@/app/components/page_components/GuitarSpecsHero";
 import Loading from "@/app/components/suspense/Loading";
 import { useLanguage } from "@/app/providers/LanguageContext";
-import { spec } from "node:test/reporters";
+
 import specs from "../../../../translations/specs";
 import ErrComponent from "@/app/components/suspense/ErrComponent";
 import ItemNotFound from "@/app/components/suspense/ItemNotFound";

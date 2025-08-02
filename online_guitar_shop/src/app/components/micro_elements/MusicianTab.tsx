@@ -22,7 +22,6 @@ export default function MusicianTab({ musiciansArr }: MusicianTabProps) {
 
   return (
     <div className="w-full flex flex-col items-center justify-start ">
-      {/* Musicians display */}
       <div className="w-full flex items-center justify-center flex-wrap gap-6 py-6">
         {visibleMusicians.map((mus, idx) => (
           <MusicianCard
