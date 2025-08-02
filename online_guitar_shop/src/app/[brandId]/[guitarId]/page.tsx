@@ -2,7 +2,7 @@
 
 import { gql, useQuery } from "@apollo/client";
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
+
 import TabSection from "@/app/components/page_components/TabSection";
 import GuitarSpecsHero from "@/app/components/page_components/GuitarSpecsHero";
 import Loading from "@/app/components/suspense/Loading";
@@ -42,7 +42,7 @@ const GUITAR_SPECS = gql`
 export default function GuitarPage() {
   const params = useParams();
   const brandId = params?.brandId as string;
-  const modelId = params?.guitarId as string; // ✅ FIXED
+  const modelId = params?.guitarId as string;
   const { language } = useLanguage();
   const t = specs[language];
 
@@ -50,13 +50,6 @@ export default function GuitarPage() {
     variables: { brandId, modelId },
     skip: !brandId || !modelId,
   });
-
-  useEffect(() => {
-    console.log("brandId:", brandId);
-    console.log("modelId:", modelId);
-    console.log("data:", data);
-    console.log("error:", error);
-  }, [brandId, modelId, data, error]);
 
   if (loading) return <Loading msg={t.loadingMsg} />;
 

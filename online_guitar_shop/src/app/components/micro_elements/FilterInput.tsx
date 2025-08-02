@@ -20,10 +20,12 @@ export default function FilterInput({
   const { language } = useLanguage();
   const t = shop[language];
 
+  // setting the filter
   const handleFilterSelect = (gType: string) => {
     setFiled(gType);
     setOpenFilter(false);
   };
+  // clearing the filter
 
   const handleClearFilter = () => {
     setFiled("");

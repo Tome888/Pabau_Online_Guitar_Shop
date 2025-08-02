@@ -16,9 +16,9 @@ export default function GuitarHero() {
   return (
     <section className="flex flex-col md:flex-row justify-between items-center w-full hero gap-2">
       <div className="w-full md:w-1/3 flex flex-col items-center justify-center gap-4 text-center md:text-left pl-15">
-        <h1 className="text-[40px] font-bold text-zinc-950 text-center">
+        <h2 className="text-[40px] font-bold text-zinc-950 text-center">
           {t.titleHero}
-        </h1>
+        </h2>
         <p className="text-lg text-[rgba(102, 102, 102, 1)] w-full text-center">
           {t.underTitle}
         </p>

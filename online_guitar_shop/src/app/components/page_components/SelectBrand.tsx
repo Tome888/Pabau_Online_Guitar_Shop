@@ -5,15 +5,18 @@ import Image from "next/image";
 import { useBrandContext } from "@/app/providers/BrandContext";
 import { useLanguage } from "@/app/providers/LanguageContext";
 import home from "../../../../translations/home";
+import Loading from "../suspense/Loading";
+import ErrComponent from "../suspense/ErrComponent";
 
 export default function SelectBrand() {
   const router = useRouter();
+  //Im using context so i dont need to refetch the data if the user returns to the home page we have it cashed
   const { brands, loading, error } = useBrandContext();
   const { language } = useLanguage();
   const t = home[language];
 
-  if (loading) return <div className="spinner"></div>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading) return <Loading msg={"Loading..."} />;
+  if (error) return <ErrComponent errMsg={error.message} />;
 
   return (
     <section className="w-full flex flex-col justify-center items-center gap-1 pt-25 pb-25">

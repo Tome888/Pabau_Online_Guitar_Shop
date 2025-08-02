@@ -5,18 +5,25 @@ import { useLanguage } from "../providers/LanguageContext";
 import LanguageToggle from "./micro_elements/LanguageToggle";
 import { Facebook, Instagram, Mail, MapPin, Twitter } from "lucide-react";
 import home from "../../../translations/home";
-// import home from "../translations/home";
-
+import Image from "next/image";
 export default function Footer() {
   const { language } = useLanguage();
-  const t = home[language]; // get translations for current language
+  const t = home[language];
 
   return (
     <footer className="flex justify-center items-center w-full flex-col bg-[#EEEEEE] ">
       <div className="flex justify-between items-center w-full gap-12 p-6">
         <div className=" p-4  rounded-md">
-          <Link href={"/"}>
-            <img src="Logo.svg" alt="VibeStrings Logo" />
+          <Link href="/">
+            <Image
+              src="/Logo.png"
+              alt="VibeStrings Logo"
+              width={150}
+              height={50}
+              priority
+              style={{ height: "auto", width: "auto" }}
+              className="h-15"
+            />
           </Link>
           <div className="flex items-center gap-2 mt-4">
             <Mail />
@@ -28,7 +35,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Example: Footer Pages section */}
         <div className=" p-4  rounded-md">
           <h3 className="mb-2 font-bold uppercase text-zinc-950">
             {t.footerPages.title}
@@ -42,7 +48,6 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Example: Footer Products section */}
         <div className=" p-4  rounded-md">
           <h3 className="mb-2 font-bold uppercase text-zinc-950">
             {t.footerProdcats.title}
@@ -56,7 +61,6 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Socials and Language Toggle */}
         <div className=" p-4  rounded-md flex flex-col items-center gap-4">
           <h3 className="font-bold uppercase text-zinc-950">
             {t.footerSocials.title}

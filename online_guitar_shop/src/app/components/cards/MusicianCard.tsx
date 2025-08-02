@@ -13,6 +13,7 @@ export default function MusicianCard({
 }: MusicianCardProps) {
   return (
     <div className="flex flex-col items-center justify-center w-[500px] h-[500px] gap-2 p-2 bg-[#FFEFE8]">
+      {/* custom component for image fallback  */}
       <MusicianImage src={imgUrl} alt={nameMusician} />
       <p className="text-[#666666] text-bigger">{nameMusician}</p>
     </div>

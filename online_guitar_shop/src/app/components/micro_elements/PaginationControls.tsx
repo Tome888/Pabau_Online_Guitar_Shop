@@ -16,6 +16,7 @@ export default function PaginationControls({
   itemsPerPage,
   onPageChange,
 }: PaginationControlsProps) {
+  //calc the number of pages
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
@@ -28,6 +29,7 @@ export default function PaginationControls({
         <ChevronLeft />
       </button>
 
+      {/* make a array to render pages */}
       {Array.from({ length: totalPages }).map((_, index) => {
         const pageNumber = index + 1;
         const isActive = pageNumber === currentPage;
@@ -46,7 +48,6 @@ export default function PaginationControls({
           </button>
         );
       })}
-
       <button
         disabled={currentPage >= totalPages}
         onClick={() => onPageChange(currentPage + 1)}

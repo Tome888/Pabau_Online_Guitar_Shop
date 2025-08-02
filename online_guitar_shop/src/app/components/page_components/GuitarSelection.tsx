@@ -46,24 +46,24 @@ export default function GuitarSelection() {
   const { language } = useLanguage();
   const t = shop[language];
 
-  // Get URL parameters safely
+  // Getting the url params
   const filterInput = searchParams?.get("filter") || "";
   const searchInput = searchParams?.get("search") || "";
   const page = parseInt(searchParams?.get("page") || "1", 10);
 
-  // Internal state for types and refs
+  // Just keeping track of the types and some refs
   const [arrTypes, setArrTypes] = useState<string[]>([]);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const scrollCooldown = useRef(false);
 
   const itemsPerPage = 6;
 
-  // Function to update URL parameters
+  // updates the url params
   const updateSearchParams = useCallback(
     (updates: { filter?: string; search?: string; page?: number }) => {
       const current = new URLSearchParams(searchParams.toString());
 
-      // Update or remove parameters
+      // update or remove paarm
       Object.entries(updates).forEach(([key, value]) => {
         if (value === "" || value === null || value === undefined) {
           current.delete(key);
@@ -72,7 +72,6 @@ export default function GuitarSelection() {
         }
       });
 
-      // Always reset page to 1 when filter or search changes (unless page is explicitly set)
       if (
         ("filter" in updates || "search" in updates) &&
         !("page" in updates)
@@ -88,7 +87,6 @@ export default function GuitarSelection() {
     [searchParams, router]
   );
 
-  // Handler functions
   const handleFilterChange = useCallback(
     (newFilter: string) => {
       updateSearchParams({ filter: newFilter });
@@ -110,7 +108,7 @@ export default function GuitarSelection() {
     [updateSearchParams]
   );
 
-  // QUERY HOOK
+  // getting the models if we have
   const { data, loading, error } = useQuery(SEARCH_MODELS, {
     variables: {
       brandId,
@@ -119,7 +117,7 @@ export default function GuitarSelection() {
     skip: !brandId,
   });
 
-  // CALCULATE FILTERED MODELS
+  // calc the models filtered
   const filteredModels =
     data?.searchModels?.filter((model: GuitarModel) => {
       const matchesType = filterInput === "" || model.type === filterInput;
@@ -130,7 +128,6 @@ export default function GuitarSelection() {
       return matchesType && matchesSearch;
     }) || [];
 
-  // Effect to set available types
   useEffect(() => {
     if (!data) return;
 
@@ -145,7 +142,7 @@ export default function GuitarSelection() {
     setArrTypes(uniqueTypes as string[]);
   }, [data]);
 
-  // Wheel scroll pagination effect
+  // BONUS TASK: SCROLL ITEMS
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -176,7 +173,6 @@ export default function GuitarSelection() {
   if (loading) return <Loading msg={"Loading..."} />;
   if (error) return <ErrComponent errMsg={error.message} />;
 
-  // DERIVED VALUES
   const start = (page - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   const pagedModels = filteredModels.slice(start, end);
@@ -194,10 +190,7 @@ export default function GuitarSelection() {
           arrTypes={arrTypes}
         />
 
-        <SearchInput
-          searchFilter={searchInput}
-          setSearch={handleSearchChange}
-        />
+        <SearchInput setSearch={handleSearchChange} />
       </div>
       {pagedModels.length === 0 ? (
         <ItemNotFound msgOne={t.notFound} msgTwo={t.adjust} />

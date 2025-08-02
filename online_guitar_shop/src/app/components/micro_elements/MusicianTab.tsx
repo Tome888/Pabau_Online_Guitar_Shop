@@ -24,6 +24,7 @@ export default function MusicianTab({ musiciansArr }: MusicianTabProps) {
     <div className="w-full flex flex-col items-center justify-start ">
       <div className="w-full flex items-center justify-center flex-wrap gap-6 py-6">
         {visibleMusicians.map((mus, idx) => (
+          // added custom fallback image component for the same reason as the other images
           <MusicianCard
             key={idx}
             imgUrl={mus.musicianImage}

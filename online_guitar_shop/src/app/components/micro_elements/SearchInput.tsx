@@ -2,37 +2,22 @@
 
 import { useLanguage } from "@/app/providers/LanguageContext";
 import { Search } from "lucide-react";
-import { useState, useEffect } from "react";
 
 interface SearchInputProps {
-  searchFilter: string;
   setSearch: (str: string) => void;
 }
 
-export default function SearchInput({
-  searchFilter,
-  setSearch,
-}: SearchInputProps) {
+export default function SearchInput({ setSearch }: SearchInputProps) {
   const { language } = useLanguage();
-  // Local state to handle input value for better UX
-  const [_, setInputValue] = useState(searchFilter);
 
-  // Update local state when searchFilter prop changes (from URL)
-  useEffect(() => {
-    setInputValue(searchFilter);
-  }, [searchFilter]);
-
-  // Handle input change with debouncing
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setInputValue(value);
 
-    // Debounce the search update
+    // Added debounce so the search is not imidiet
     const timeoutId = setTimeout(() => {
       setSearch(value.trim().toLowerCase());
     }, 300);
 
-    // Cleanup timeout on next change
     return () => clearTimeout(timeoutId);
   };
 

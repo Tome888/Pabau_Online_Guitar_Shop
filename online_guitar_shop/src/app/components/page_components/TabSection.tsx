@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SpecsTab from "../micro_elements/SpecsTab";
 import MusicianTab from "../micro_elements/MusicianTab";
 import { useLanguage } from "@/app/providers/LanguageContext";
@@ -42,14 +42,11 @@ export default function TabSection({ modelData }: ModelProps) {
   const { language } = useLanguage();
   const t = specs[language];
 
-  useEffect(() => {
-    console.log(modelData, "HELLO FROM TAB SECTION");
-  }, [modelData]);
-
   return (
     <div className="w-[100%]">
       <div className="flex items-center justify-center">
         <button
+          disabled={!modelData.specs}
           onClick={() => setToggleTab(true)}
           className={`w-[50%] pb-2 pt-30 text-[24px] ${
             toggleTab && "border-b-7 border-b-amber-500 text-amber-500"
@@ -58,6 +55,7 @@ export default function TabSection({ modelData }: ModelProps) {
           {t.specs}
         </button>
         <button
+          disabled={!modelData.musicians[0]}
           onClick={() => setToggleTab(false)}
           className={`w-[50%] pb-2 pt-30 text-[24px] ${
             !toggleTab && "border-b-7 border-b-amber-500 text-amber-500"

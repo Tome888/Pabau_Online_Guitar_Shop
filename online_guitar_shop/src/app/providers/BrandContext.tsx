@@ -1,4 +1,3 @@
-// context/BrandContext.tsx
 "use client";
 
 import { gql, useQuery, ApolloError } from "@apollo/client";
@@ -44,7 +43,6 @@ export const BrandProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (data?.findAllBrands) {
       setBrands(data.findAllBrands);
-      console.log(data, "FROM CONTEXT");
     }
   }, [data]);
 
